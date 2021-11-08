@@ -1,11 +1,14 @@
 version: 2.1
-
-jobs:
+orbs:
+  cypress: cypress-io/cypress@1
+workflows:
   build:
-    parallelism: 15
-    machine:
-      image: ubuntu-2004:202101-01
-    steps:
-      - checkout
-      - run: |
-           chmod +x project.sh
+    jobs:
+      - cypress/install
+      - cypress/run:
+          requires:
+            - cypress/install
+          record: true
+          parallel: true
+          parallelism: 15
+          group: 15 machines
