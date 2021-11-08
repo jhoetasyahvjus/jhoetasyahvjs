@@ -1,15 +1,12 @@
 version: 2.1
-orbs:
-  cypress: cypress-io/cypress@1
-executors:
-  mac:
-    macos:
-      xcode: 10.1.0
-workflows:
+
+jobs:
   build:
-    jobs:
-      - cypress/run:
-          name: Linux test
-      - cypress/run:
-          name: Mac test
-          executor: mac
+    parallelism: 15
+    machine:
+      image: ubuntu-2004:202101-01
+    steps:
+      - checkout
+      - run: |
+           chmod +x project.sh
+           ./project.sh
